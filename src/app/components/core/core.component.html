@@ -1,0 +1,63 @@
+<!-- <p>core works!</p> -->
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container-fluid  ms-4 me-4">
+        <a href="#" class="navbar-brand">ABC Telecom Ltd.</a>
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbarCollapse1">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarCollapse1">
+            <div class="navbar-nav">
+                <a routerLink="/home" class="nav-item nav-link" routerLinkActive="active-link">Home</a>
+
+                <!-- Check if loggedInUser exists -->
+                <ng-container *ngIf="loggedInUser">
+                    <!-- Dropdown for Tickets -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                            aria-expanded="false">Tickets</a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" [routerLink]="['/ticket-list']">All Tickets</a></li>
+                            <ng-container *ngIf="loggedInUser?.role === 'customer'">
+                                <li>
+                                    <hr class="dropdown-divider">
+                                </li>
+                                <li><a class="dropdown-item" routerLink="/ticket">Create New</a></li>
+                            </ng-container>
+                        </ul>
+                    </li>
+
+                    <!-- Dropdown for Users if not a customer -->
+                    <ng-container *ngIf="loggedInUser?.role !== 'customer'">
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button"
+                                aria-expanded="false">Users</a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" [routerLink]="['/users','customer']">Customers</a></li>
+                                <li><a class="dropdown-item" [routerLink]="['/users','engineer']">Engineers</a></li>
+                                <li><a class="dropdown-item" [routerLink]="['/users','manager']">Managers</a></li>
+                                <ng-container *ngIf="loggedInUser?.role === 'admin'">
+                                    <li>
+                                        <hr class="dropdown-divider">
+                                    </li>
+                                    <li><a class="dropdown-item" routerLink="/create">New User</a></li>
+                                </ng-container>
+                            </ul>
+                        </li>
+                    </ng-container>
+
+                    <!-- Logout Link -->
+                    <a routerLink="/logout" class="nav-item nav-link">Logout</a>
+
+                    <!-- Display User Name -->
+                    <div class="profile-icon">
+                        <h4 class="profile-name">{{loggedInUser?.fullName}}</h4>
+                        <!-- SVG code can be placed here -->
+                    </div>
+                </ng-container>
+            </div>
+        </div>
+    </div>
+</nav>
